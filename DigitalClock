@@ -14,7 +14,7 @@ public class FinalDigitalClock extends JFrame {
 
     public FinalDigitalClock() {
         // Frame setup
-        setTitle("GROUP 1 DIGITAL CLOCK");
+        setTitle("DIGITAL CLOCK");
         setSize(1500, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
