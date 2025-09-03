@@ -1,0 +1,108 @@
+import javax.swing.*;
+import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+public class FinalDigitalClock extends JFrame {
+    private JLabel timeLabel;
+    private JLabel dateLabel; // Bagong label for the date
+    private SimpleDateFormat timeFormat;  // Dito declaration ng format ng Time
+    private SimpleDateFormat dateFormat; // Dito declaration ng format ng Date
+    private String time;
+    private String date; // New string for the date
+
+    public FinalDigitalClock() {
+        // Frame setup
+        setTitle("GROUP 1 DIGITAL CLOCK");
+        setSize(1500, 650);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Time label setup 
+        timeFormat = new SimpleDateFormat("HH:mm:ss"); //Eto magiging format ng time na galing sa line 11
+        timeLabel = new JLabel();
+        timeLabel.setFont(new Font("Dotty", Font.PLAIN, 150));
+        timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        timeLabel.setForeground(Color.RED);
+
+        // Date label setup
+        dateFormat = new SimpleDateFormat("MM/dd/yyyy"); //Eto magiging format ng time na galing sa line 12
+        dateLabel = new JLabel();
+        dateLabel.setFont(new Font("Dotty", Font.PLAIN, 30));
+        dateLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        dateLabel.setForeground(Color.RED);
+
+        // Adding the time label to the center
+        add(timeLabel, BorderLayout.CENTER);
+
+        // Panel for days of the week
+        JPanel daysPanel = new JPanel();
+        daysPanel.setLayout(new GridLayout(1, 7));
+        daysPanel.setBackground(Color.BLACK); // PAMPAITIM NG BACKGROUND
+
+       // Arraylist ng mga araw ng linggo (Duh)
+        ArrayList<String> days = new ArrayList<>();
+        days.add("SUN");
+        days.add("MON");
+        days.add("TUE");
+        days.add("WED");
+        days.add("THU");
+        days.add("FRI");
+        days.add("SAT");
+
+        // Dito sa code nato, dito kukunin yung araw ng isang linggo
+        Calendar calendar = Calendar.getInstance();
+        int today = calendar.get(Calendar.DAY_OF_WEEK) - 1; // Adjusted for Java's calendar;
+        int day = today;
+
+        // JLabels for days of the week
+        for (int i = 0; i < days.size(); i++) {
+            JLabel dayLabel = new JLabel(days.get(i), SwingConstants.CENTER);
+            dayLabel.setFont(new Font("Dotty", Font.PLAIN, 50));
+            if (i == day) {
+                dayLabel.setForeground(Color.RED); // Today's day in red
+            } else {
+                dayLabel.setForeground(Color.GRAY); // The rest days in gray
+            }
+            daysPanel.add(dayLabel);
+        }
+
+        // Ilalagay yung location ng dayLabel
+        add(daysPanel, BorderLayout.SOUTH);
+
+        // Panel to hold the date label
+        JPanel datePanel = new JPanel(new BorderLayout());
+        datePanel.setBackground(Color.BLACK);
+       
+        // Putting the dateLabel on NORTHWEST of the screen
+        datePanel.add(dateLabel, BorderLayout.WEST); 
+        add(datePanel, BorderLayout.NORTH);
+
+        // Setting background color of the frame or window, basta yung MIDDLE screen
+       getContentPane().setBackground(Color.BLACK);
+
+        // HUWAG GALAWIN TONG CODE NATO, PAG GINALAW TO MASISIRA ANG BUONG CODE
+        //BASTA ANG PURPOSE NENTO AY PARA MAGING VISIBLE ANG SCREEN GETS!?
+        setVisible(true);
+
+        // Update the time and date every second
+        updateTime();
+    }
+
+    // Dito kinukuha ang date and timr
+    public void updateTime() {
+        new Timer(1000, e -> {
+            Calendar now = Calendar.getInstance();
+            time = timeFormat.format(now.getTime());
+            date = dateFormat.format(now.getTime()); // Kinukuha at inuupdate yung Time and date
+            timeLabel.setText(time);
+            dateLabel.setText(date); // Sineset yung date at time label para maging visible sa screen
+        }).start();
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new FinalDigitalClock());
+    }
+}
+
